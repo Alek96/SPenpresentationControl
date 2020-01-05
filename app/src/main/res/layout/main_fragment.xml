@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/spen_connecting" />
+            android:text="@string/spen_connecting"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/computer_connect"
@@ -34,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/computer_connecting" />
+            android:text="@string/computer_connecting"
+            android:textSize="24sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

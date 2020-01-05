@@ -1,10 +1,2 @@
 
->squid:S1068"'Remove this unused "TAG" private field.(¿ËÍã
-Vsquid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ
-Dsquid:S1185!"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
-rsquid:UselessImportCheck"GRemove this unused import 'com.example.pentest.ui.SPenRemoteViewModel'.(Š´Þ¬8„à™’ö-
-esquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(²Ú±Ž
-?squid:S1185"(Remove this method to simply inherit it.(Ù«µ§
-}squid:UselessImportCheck
-"MRemove this unused import 'com.example.pentest.ui.tutorial.TutorialFragment'.(ýæøÑûÿÿÿÿ8Äë°’ö-
-tsquid:UselessImportCheck"IRemove this unused import 'com.samsung.android.sdk.penremote.SpenRemote'.(¨ÂÈä8õ•’ö-
+esquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(÷ò¾Ò

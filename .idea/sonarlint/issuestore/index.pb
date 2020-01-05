@@ -7,3 +7,13 @@ o
 ?app/src/main/java/com/example/pentest/ui/main/MainFragment.java,f\7\f7e863cc0e6f7af855a460226a6e388a91a4c8fe
 g
 7app/src/main/java/com/example/pentest/MainActivity.java,8\4\84a370a001b7b75e0b172c66d4902a938a0b48b4
+v
+Fapp/src/main/java/com/example/pentest/ui/control/ControlViewModel.java,7\2\725961d21276c8bc65c3ed480a0f233a045d100a
+_
+/app/src/main/java/com/example/pentest/Tags.java,9\9\99f6aeb495632f8e8d1e5e6105ba8fb953c704f0
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+u
+Eapp/src/main/java/com/example/pentest/ui/control/ControlFragment.java,8\9\89b9b1cfb946f1d28ab7e3a669fa04c3a34e223f
+w
+Gapp/src/main/java/com/example/pentest/ui/tutorial/TutorialFragment.java,4\e\4eddaaa2a51b0bc1ae3692d2782b55d14fb7d657
