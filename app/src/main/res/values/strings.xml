@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pen test</string>
+    <string name="app_name">SPenPresentationControl</string>
 
     <string name="shutter">Shutter</string>
     <string name="camera_switch">Switch</string>

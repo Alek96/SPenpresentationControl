@@ -1,5 +1,0 @@
-
-Jsquid:S1068".Remove this unused "mViewModel" private field.(ñØðÆþÿÿÿÿ
-dsquid:UselessImportCheck"4Remove this unused import 'android.widget.TextView'.(„Ë‚ˆÿÿÿÿÿ8¥«ýˆ÷-
-rsquid:UselessImportCheck"GRemove this unused import 'com.example.pentest.ui.SPenRemoteViewModel'.(Š´Þ¬8®åˆ‡÷-
-usquid:S1450"YRemove the "mViewModel" field and declare it as a local variable in the relevant methods.(ñØðÆþÿÿÿÿ

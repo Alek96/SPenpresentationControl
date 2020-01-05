@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='Pen test'
+rootProject.name='SPenPresentationControl'
