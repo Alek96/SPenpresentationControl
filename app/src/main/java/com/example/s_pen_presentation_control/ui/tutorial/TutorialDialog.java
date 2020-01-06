@@ -19,14 +19,26 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.s_pen_presentation_control.R;
 import com.example.s_pen_presentation_control.Tags;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 public class TutorialDialog extends DialogFragment {
 
     private TutorialViewModel mTutorialViewModel;
-    private View mView;
-    private Button mButtonNext;
-    private Button mButtonBack;
-    private TextView mDescriptionTextVew;
-    private ProgressBar mProgressBar;
+
+    private Unbinder unbinder;
+
+    @BindView(R.id.tutorial_button_next)
+    Button mButtonNext;
+    @BindView(R.id.tutorial_button_back)
+    Button mButtonBack;
+    @BindView(R.id.tutorial_text_view)
+    TextView mDescriptionTextVew;
+    @BindView(R.id.tutorial_progress_bar)
+    ProgressBar mProgressBar;
+
     private TutorialDialogListener listener;
 
 
@@ -56,8 +68,9 @@ public class TutorialDialog extends DialogFragment {
         builder.setTitle(R.string.tutorial);
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        mView = inflater.inflate(R.layout.tutorial_fragment, null);
-        builder.setView(mView);
+        View view = inflater.inflate(R.layout.tutorial_fragment, null);
+        unbinder = ButterKnife.bind(this, view);
+        builder.setView(view);
 
         Dialog dialog = builder.create();
         dialog.setCancelable(false);
@@ -69,44 +82,39 @@ public class TutorialDialog extends DialogFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        Log.d(Tags.APP_TAG, "onDestroyView");
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(Tags.APP_TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         mTutorialViewModel = ViewModelProviders.of(this).get(TutorialViewModel.class);
-
-        mButtonBack = mView.findViewById(R.id.tutorial_button_back);
-        mButtonNext = mView.findViewById(R.id.tutorial_button_next);
-        mDescriptionTextVew = mView.findViewById(R.id.tutorial_text_view);
-        mProgressBar = mView.findViewById(R.id.tutorial_progress_bar);
-
-        mButtonBack.setOnClickListener(onButtonBackClickListener);
-        mButtonNext.setOnClickListener(onButtonNextClickListener);
         updateViews();
     }
 
-    private View.OnClickListener onButtonBackClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mTutorialViewModel.isFirstStage()) {
-                Log.e(Tags.APP_TAG, "cannot set previous Stage, because it is first one");
-            } else {
-                mTutorialViewModel.previousStage();
-                updateViews();
-            }
+    @OnClick(R.id.tutorial_button_back)
+    public void onButtonBackClick(View view) {
+        if (mTutorialViewModel.isFirstStage()) {
+            Log.e(Tags.APP_TAG, "cannot set previous Stage, because it is first one");
+        } else {
+            mTutorialViewModel.previousStage();
+            updateViews();
         }
-    };
+    }
 
-    private View.OnClickListener onButtonNextClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mTutorialViewModel.isLastStage()) {
-                listener.onTutorialDialogFinished(TutorialDialog.this);
-            } else {
-                mTutorialViewModel.nextStage();
-                updateViews();
-            }
+    @OnClick(R.id.tutorial_button_next)
+    public void onButtonNextClick(View view) {
+        if (mTutorialViewModel.isLastStage()) {
+            listener.onTutorialDialogFinished(TutorialDialog.this);
+        } else {
+            mTutorialViewModel.nextStage();
+            updateViews();
         }
-    };
+    }
 
     private void updateViews() {
         mDescriptionTextVew.setText(mTutorialViewModel.getStage().getTextId());

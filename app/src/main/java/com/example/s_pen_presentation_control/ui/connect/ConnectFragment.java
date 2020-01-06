@@ -1,14 +1,7 @@
 package com.example.s_pen_presentation_control.ui.connect;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +10,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.s_pen_presentation_control.R;
+import com.example.s_pen_presentation_control.SPenRemoteViewModel;
 import com.example.s_pen_presentation_control.Tags;
-import com.example.s_pen_presentation_control.ui.SPenRemoteViewModel;
 
 public class ConnectFragment extends Fragment {
 

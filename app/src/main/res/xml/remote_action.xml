@@ -1,34 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <remote-actions version="1.2">
     <action
-        id="swipe_right"
+        id="click"
         label="@string/shutter"
         priority="1"
         trigger_key="CTRL_LEFT+A">
-        <preference name="gesture" value="click|swipe_right"/>
+        <preference name="gesture" value="click"/>
+    </action>
+
+    <action
+        id="double_click"
+        label="@string/camera_switch"
+        priority="2"
+        trigger_key="CTRL_LEFT+B">
+        <preference name="gesture" value="double_click"/>
+    </action>
+
+    <action
+        id="swipe_right"
+        label="@string/shutter"
+        priority="3"
+        trigger_key="CTRL_LEFT+C">
+        <preference name="gesture" value="swipe_right"/>
     </action>
 
     <action
         id="swipe_left"
         label="@string/camera_switch"
-        priority="2"
-        trigger_key="CTRL_LEFT+B">
-        <preference name="gesture" value="double_click|swipe_left"/>
+        priority="4"
+        trigger_key="CTRL_LEFT+D">
+        <preference name="gesture" value="swipe_left"/>
     </action>
 
     <action
         id="swipe_up"
         label="@string/next_filter"
-        priority="3"
-        trigger_key="CTRL_LEFT+C">
+        priority="5"
+        trigger_key="CTRL_LEFT+E">
         <preference name="gesture" value="swipe_up"/>
     </action>
 
     <action
         id="swipe_down"
         label="@string/prev_filter"
-        priority="4"
-        trigger_key="CTRL_LEFT+D">
+        priority="6"
+        trigger_key="CTRL_LEFT+F">
         <preference name="gesture" value="swipe_down"/>
     </action>
 

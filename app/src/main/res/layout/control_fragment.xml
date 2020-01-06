@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/control_button_click"
+                android:id="@+id/control_button_double_click"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -55,7 +55,7 @@
                 android:src="@drawable/ic_arrow_up" />
 
             <ImageButton
-                android:id="@+id/control_button_double_click"
+                android:id="@+id/control_button_click"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

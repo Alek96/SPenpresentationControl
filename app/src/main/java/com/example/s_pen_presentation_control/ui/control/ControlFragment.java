@@ -5,29 +5,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.s_pen_presentation_control.ComputerRemoteViewModel;
 import com.example.s_pen_presentation_control.R;
 import com.example.s_pen_presentation_control.Tags;
-import com.example.s_pen_presentation_control.ui.tutorial.TutorialDialog;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class ControlFragment extends Fragment {
 
     private ControlViewModel mViewModel;
-    private View mView;
-    private Button mButtonClick;
-    private Button mButtonDoubleClick;
-    private Button mButtonSwipeRight;
-    private Button mButtonSwipeLeft;
-    private Button mButtonSwipeUp;
-    private Button mButtonSwipeDown;
+    private ComputerRemoteViewModel mComputerRemoteViewModel;
 
+    private Unbinder unbinder;
 
     public static ControlFragment newInstance() {
         return new ControlFragment();
@@ -38,14 +35,9 @@ public class ControlFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         Log.d(Tags.APP_TAG, "onCreateView");
-        mView = inflater.inflate(R.layout.control_fragment, container, false);
-        mButtonClick = mView.findViewById(R.id.control_button_click);
-        mButtonDoubleClick = mView.findViewById(R.id.control_button_double_click);
-        mButtonSwipeRight = mView.findViewById(R.id.control_button_swipe_right);
-        mButtonSwipeLeft = mView.findViewById(R.id.control_button_swipe_left);
-        mButtonSwipeUp = mView.findViewById(R.id.control_button_swipe_up);
-        mButtonSwipeDown = mView.findViewById(R.id.control_button_swipe_down);
-        return mView;
+        View view = inflater.inflate(R.layout.control_fragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -53,5 +45,43 @@ public class ControlFragment extends Fragment {
         Log.d(Tags.APP_TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ControlViewModel.class);
+        mComputerRemoteViewModel = ViewModelProviders.of(getActivity()).get(ComputerRemoteViewModel.class);
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(Tags.APP_TAG, "onDestroyView");
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.control_button_click)
+    public void onButtonClick(View view) {
+        mComputerRemoteViewModel.onSPenClick();
+    }
+
+    @OnClick(R.id.control_button_double_click)
+    public void onButtonDoubleClick(View view) {
+        mComputerRemoteViewModel.onSPenDoubleClick();
+    }
+
+    @OnClick(R.id.control_button_swipe_right)
+    public void onButtonSwipeRight(View view) {
+        mComputerRemoteViewModel.onSPenSwipeRight();
+    }
+
+    @OnClick(R.id.control_button_swipe_left)
+    public void onButtonSwipeLeft(View view) {
+        mComputerRemoteViewModel.onSPenSwipeLeft();
+    }
+
+    @OnClick(R.id.control_button_swipe_up)
+    public void onButtonSwipeUp(View view) {
+        mComputerRemoteViewModel.onSPenSwipeUp();
+    }
+
+    @OnClick(R.id.control_button_swipe_down)
+    public void onButtonSwipeDown(View view) {
+        mComputerRemoteViewModel.onSPenSwipeDown();
     }
 }
