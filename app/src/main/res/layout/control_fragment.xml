@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/button1"
+                android:id="@+id/control_button_click"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -45,7 +45,7 @@
                 android:src="@drawable/ic_circles_padding" />
 
             <ImageButton
-                android:id="@+id/button2"
+                android:id="@+id/control_button_swipe_up"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -55,7 +55,7 @@
                 android:src="@drawable/ic_arrow_up" />
 
             <ImageButton
-                android:id="@+id/button3"
+                android:id="@+id/control_button_double_click"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -72,7 +72,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/button4"
+                android:id="@+id/control_button_swipe_left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -82,7 +82,7 @@
                 android:src="@drawable/ic_arrow_left" />
 
             <ImageButton
-                android:id="@+id/button5"
+                android:id="@+id/control_button_swipe_down"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -92,7 +92,7 @@
                 android:src="@drawable/ic_arrow_down" />
 
             <ImageButton
-                android:id="@+id/button6"
+                android:id="@+id/control_button_swipe_right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

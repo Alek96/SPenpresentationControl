@@ -1,4 +1,4 @@
-package com.example.SPenPresentationControl.ui.main;
+package com.example.s_pen_presentation_control.ui.connect;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,21 +17,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.SPenPresentationControl.R;
-import com.example.SPenPresentationControl.Tags;
-import com.example.SPenPresentationControl.ui.SPenRemoteViewModel;
+import com.example.s_pen_presentation_control.R;
+import com.example.s_pen_presentation_control.Tags;
+import com.example.s_pen_presentation_control.ui.SPenRemoteViewModel;
 
-public class MainFragment extends Fragment {
+public class ConnectFragment extends Fragment {
 
-    private MainViewModel mViewModel;
+    private ConnectViewModel mViewModel;
     private SPenRemoteViewModel sPenRemoteViewModel;
     private TextView mSpenConnectTextView;
     private TextView mComputerConnectTextView;
     private OnConnectionSucceededListener listener;
     private final Handler handler = new Handler();
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static ConnectFragment newInstance() {
+        return new ConnectFragment();
     }
 
     public interface OnConnectionSucceededListener {
@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
             listener = (OnConnectionSucceededListener) context;
         } else {
             throw new ClassCastException(context.toString()
-                    + " must implement " + MainFragment.class.getSimpleName()
+                    + " must implement " + ConnectFragment.class.getSimpleName()
                     + "." + OnConnectionSucceededListener.class.getSimpleName());
         }
     }
@@ -75,7 +75,7 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(Tags.APP_TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ConnectViewModel.class);
         sPenRemoteViewModel = ViewModelProviders.of(getActivity()).get(SPenRemoteViewModel.class);
         sPenRemoteViewModel.checkSdkInfo();
         updateSPenConnectionTextView();

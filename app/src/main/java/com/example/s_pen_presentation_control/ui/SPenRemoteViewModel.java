@@ -1,10 +1,10 @@
-package com.example.SPenPresentationControl.ui;
+package com.example.s_pen_presentation_control.ui;
 
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.SPenPresentationControl.Tags;
+import com.example.s_pen_presentation_control.Tags;
 import com.samsung.android.sdk.penremote.SpenRemote;
 
 public class SPenRemoteViewModel extends ViewModel {

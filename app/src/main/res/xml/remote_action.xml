@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <remote-actions version="1.2">
     <action
-        id="shutter"
+        id="swipe_right"
         label="@string/shutter"
         priority="1"
         trigger_key="CTRL_LEFT+A">
@@ -9,7 +9,7 @@
     </action>
 
     <action
-        id="camera_switch"
+        id="swipe_left"
         label="@string/camera_switch"
         priority="2"
         trigger_key="CTRL_LEFT+B">
@@ -17,7 +17,7 @@
     </action>
 
     <action
-        id="next_filter"
+        id="swipe_up"
         label="@string/next_filter"
         priority="3"
         trigger_key="CTRL_LEFT+C">
@@ -25,32 +25,32 @@
     </action>
 
     <action
-        id="prev_filter"
+        id="swipe_down"
         label="@string/prev_filter"
         priority="4"
         trigger_key="CTRL_LEFT+D">
         <preference name="gesture" value="swipe_down"/>
     </action>
 
-    <action
-        id="zoom_in"
-        label="@string/zoom_in"
-        priority="5"
-        trigger_key="CTRL_LEFT+E"
-        repeatable="true"
-        repeatable_interval="short">
-        <preference name="gesture" value="circle_cw"/>
-        <preference name="motion_only" value="true"/>
-    </action>
+<!--    <action-->
+<!--        id="zoom_in"-->
+<!--        label="@string/zoom_in"-->
+<!--        priority="5"-->
+<!--        trigger_key="CTRL_LEFT+E"-->
+<!--        repeatable="true"-->
+<!--        repeatable_interval="short">-->
+<!--        <preference name="gesture" value="circle_cw"/>-->
+<!--        <preference name="motion_only" value="true"/>-->
+<!--    </action>-->
 
-    <action
-        id="zoom_out"
-        label="@string/zoom_out"
-        priority="6"
-        trigger_key="CTRL_LEFT+F"
-        repeatable="true"
-        repeatable_interval="short">
-        <preference name="gesture" value="circle_ccw"/>
-        <preference name="motion_only" value="true"/>
-    </action>
+<!--    <action-->
+<!--        id="zoom_out"-->
+<!--        label="@string/zoom_out"-->
+<!--        priority="6"-->
+<!--        trigger_key="CTRL_LEFT+F"-->
+<!--        repeatable="true"-->
+<!--        repeatable_interval="short">-->
+<!--        <preference name="gesture" value="circle_ccw"/>-->
+<!--        <preference name="motion_only" value="true"/>-->
+<!--    </action>-->
 </remote-actions>

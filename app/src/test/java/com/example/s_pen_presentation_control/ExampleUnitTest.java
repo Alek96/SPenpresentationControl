@@ -1,4 +1,4 @@
-package com.example.SPenPresentationControl;
+package com.example.s_pen_presentation_control;
 
 import org.junit.Test;
 

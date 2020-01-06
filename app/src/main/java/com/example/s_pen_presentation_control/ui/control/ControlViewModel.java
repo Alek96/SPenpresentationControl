@@ -1,4 +1,4 @@
-package com.example.SPenPresentationControl.ui.control;
+package com.example.s_pen_presentation_control.ui.control;
 
 import androidx.lifecycle.ViewModel;
 

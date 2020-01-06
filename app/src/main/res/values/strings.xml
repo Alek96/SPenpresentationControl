@@ -17,4 +17,7 @@
     <string name="next">Next</string>
     <string name="close">Close</string>
     <string name="tutorial">Tutorial</string>
+    <string name="tutorial_description_empty">description...</string>
+    <string name="tutorial_description_send_command">Make a move with SPen or click on corresponding button to send commend to PC</string>
+    <string name="tutorial_description_edit_command">To change "commend" to send by SPen, hold on corresponding button</string>
 </resources>
