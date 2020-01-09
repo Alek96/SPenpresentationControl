@@ -11,6 +11,7 @@ public class CommunicationThread extends Thread {
 
     private Server server;
     private Socket socket;
+    private boolean running = false;
     private DataInputStream dis = null;
     private DataOutputStream dos = null;
 
@@ -21,6 +22,7 @@ public class CommunicationThread extends Thread {
     }
 
     public void send(String message) {
+        log.debug("Send, message size {} ", message.length());
         try {
             dos.writeUTF(message);
             dos.flush();
@@ -37,7 +39,8 @@ public class CommunicationThread extends Thread {
 
             dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            while (true) {
+            running = true;
+            while (running) {
                 server.incomingMessage(dis.readUTF());
             }
         } catch (IOException e) {
@@ -48,6 +51,10 @@ public class CommunicationThread extends Thread {
 
     public void close() throws IOException {
         log.info("Client {} disconnect from server", socket.getRemoteSocketAddress());
+        if (!running) {
+            return;
+        }
+        running = true;
         socket.close();
         dis.close();
         dos.close();

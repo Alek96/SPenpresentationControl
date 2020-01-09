@@ -48,7 +48,9 @@ public class ComputerRemoteViewModel extends ViewModel {
     }
 
     public void connect(String address, int port, OnConnect onConnect) {
+        Log.d(Tags.APP_TAG, "connect, address: " + address + ", port: " + port);
         if (client != null) {
+            Log.d(Tags.APP_TAG, "client is not null -> remove");
             removeClient();
         }
         new ConnectTask(address, port, onConnect).execute();
@@ -71,6 +73,7 @@ public class ComputerRemoteViewModel extends ViewModel {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
+            Log.d(Tags.APP_TAG, "doInBackground, start ConnectTask");
             client = new Client(address, port, onClientRemove);
             try {
                 client.connect();
@@ -83,6 +86,7 @@ public class ComputerRemoteViewModel extends ViewModel {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            Log.d(Tags.APP_TAG, "onPostExecute, connection result: " + result);
             if (Boolean.TRUE.equals(result)) {
                 new receivedTask().execute();
             }
@@ -92,22 +96,25 @@ public class ComputerRemoteViewModel extends ViewModel {
 
     private Client.OnClientRemove onClientRemove = this::removeClient;
 
-    private synchronized void removeClient() {
+    public synchronized void removeClient() {
         Log.i(Tags.APP_TAG, "Remove client");
         try {
-            client.close();
+            if (client != null && client.isConnected()) {
+                client.close();
+            }
         } catch (IOException e) {
             Log.e(Tags.APP_TAG, "Error closing Client", e);
         }
         client = null;
     }
 
-
     private class receivedTask extends AsyncTask<Void, String, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(Tags.APP_TAG, "doInBackground, start receivedTask");
             if (client == null) {
+                Log.d(Tags.APP_TAG, "client is null");
                 return null;
             }
             client.run(onMessageReceived);
@@ -124,20 +131,24 @@ public class ComputerRemoteViewModel extends ViewModel {
         }
 
         private synchronized void incomingMessage(String input) {
-            Log.d(Tags.APP_TAG, "incomingMessage");
+            Log.d(Tags.APP_TAG, "incomingMessage, input: " + input);
             if (input.equals("exit")) {
+                Log.d(Tags.APP_TAG, "received exit commend");
                 removeClient();
             }
         }
     }
 
     private synchronized void sendMessage(String message) {
-        if (client != null) {
-            new SendTask(message).execute();
+        Log.d(Tags.APP_TAG, "sendMessage, message size: " + message.length());
+        if (client == null) {
+            Log.d(Tags.APP_TAG, "client is null");
+            return;
         }
+        new Thread(new SendTask(message)).start();
     }
 
-    private class SendTask extends AsyncTask<Void, Void, Void> {
+    private class SendTask implements Runnable {
         private String message;
 
         private SendTask(String message) {
@@ -145,11 +156,13 @@ public class ComputerRemoteViewModel extends ViewModel {
         }
 
         @Override
-        protected Void doInBackground(Void... values) {
-            if (client != null) {
-                client.send(message);
+        public void run() {
+            Log.d(Tags.APP_TAG, "start SendTask");
+            if (client == null) {
+                Log.d(Tags.APP_TAG, "client is null");
+                return;
             }
-            return null;
+            client.send(message);
         }
     }
 }

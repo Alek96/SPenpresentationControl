@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.s_pen_presentation_control.R;
 import com.example.s_pen_presentation_control.Tags;
@@ -42,8 +39,8 @@ public class ConnectDialog extends DialogFragment {
     Button mConnectButton;
 
 
-    public static ConnectDialog newInstance() {
-        return new ConnectDialog();
+    public ConnectDialog(ComputerRemoteViewModel computerRemoteViewModel) {
+        this.mComputerRemoteViewModel = computerRemoteViewModel;
     }
 
     public interface OnConnectionSucceededListener {
@@ -98,34 +95,58 @@ public class ConnectDialog extends DialogFragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(Tags.APP_TAG, "onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
-        mComputerRemoteViewModel = ViewModelProviders.of(getActivity()).get(ComputerRemoteViewModel.class);
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(Tags.APP_TAG, "onActivityCreated");
+//        super.onActivityCreated(savedInstanceState);
+//        mComputerRemoteViewModel = ViewModelProviders.of(getActivity()).get(ComputerRemoteViewModel.class);
+//    }
 
     @OnClick(R.id.connect_button)
-    public void onConnectButtonClick(View view) {
+    void onConnectButtonClick(View view) {
         Log.d(Tags.APP_TAG, "onConnectButtonClick");
-        String address = mAddressEditTextVew.getText().toString();
-        String sPort = mPortEditTextVew.getText().toString();
-        if ("".matches(address)) {
-            mErrorTextVew.setText("Address is required");
-            return;
-        } else if ("".matches(sPort)) {
-            mErrorTextVew.setText("Port is required");
+        if (mComputerRemoteViewModel.isConnected()) {
+            mConnectButton.setText(R.string.connect);
+            mComputerRemoteViewModel.removeClient();
             return;
         }
-        mErrorTextVew.setText("Connecting...");
-        int port = Integer.valueOf(sPort);
-        Log.d(Tags.APP_TAG, "address: " + address + ", port: " + port);
+        if (validateAddress() && validatePort()) {
+            startConnecting();
+        }
+    }
+
+    private void startConnecting() {
+        mErrorTextVew.setText(R.string.connecting);
+        mConnectButton.setText(R.string.stop_connecting);
+
+        String address = mAddressEditTextVew.getText().toString();
+        int port = Integer.valueOf(mPortEditTextVew.getText().toString());
+
         mComputerRemoteViewModel.connect(address, port, result -> {
             if (result) {
                 listener.onConnectionSucceeded();
             } else {
-                mErrorTextVew.setText("Connection Failed");
+                mErrorTextVew.setText(R.string.connection_failed);
+                mConnectButton.setText(R.string.connect);
             }
         });
+    }
+
+    private boolean validateAddress() {
+        String address = mAddressEditTextVew.getText().toString();
+        if ("".matches(address)) {
+            mErrorTextVew.setText(R.string.address_is_required);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validatePort() {
+        String sPort = mPortEditTextVew.getText().toString();
+        if ("".matches(sPort)) {
+            mErrorTextVew.setText(R.string.port_is_required);
+            return false;
+        }
+        return true;
     }
 }

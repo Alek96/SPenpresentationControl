@@ -1,36 +1,62 @@
 package com.zamo.spenserver;
 
-import javax.net.ssl.SSLServerSocketFactory;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+import java.util.Collections;
+import java.util.Enumeration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 public class Server implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(Server.class.getSimpleName());
 
-    private boolean started = true;
+    private boolean running = true;
     private ServerSocket serverSocket = null;
     private CommunicationThread client = null;
 
     public Server(int port) {
         try {
+            String address = getAddress();
             serverSocket = new ServerSocket(port);
-            log.info("Server started on port {}", serverSocket.getLocalPort());
+            log.info("Server started on address {}. port {}", address, serverSocket.getLocalPort());
         } catch (IOException e) {
             log.error("Can not bind to port", e);
         }
     }
 
+    private String getAddress() {
+        Enumeration<NetworkInterface> nets = null;
+        try {
+            nets = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException e) {
+            log.error("Can not get Network Interfaces", e);
+            return "error";
+        }
+        for (NetworkInterface netInt : Collections.list(nets)) {
+            Enumeration<InetAddress> inetAddresses = netInt.getInetAddresses();
+            for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+                if (inetAddress.getHostAddress().contains("192.168.1.")) {
+                    return inetAddress.getHostAddress();
+                }
+            }
+        }
+        return "";
+    }
+
+    static void displayInterfaceInformation(NetworkInterface netint) {
+        log.debug("Display name: {}", netint.getDisplayName());
+        log.debug("Name: {}", netint.getName());
+        Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
+        for (InetAddress inetAddress : Collections.list(inetAddresses)) {
+            log.debug("InetAddress: {}", inetAddress);
+        }
+        log.debug("\n");
+    }
+
     @Override
     public void run() {
-        while (started) {
+        while (running) {
             try {
                 log.info("Waiting for client...");
                 acceptClient(serverSocket.accept());
@@ -51,7 +77,16 @@ public class Server implements Runnable {
     }
 
     public void stop() {
-        started = false;
+        if (!running) {
+            return;
+        }
+        running = false;
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("Error while closing serverSocket", e);
+        }
     }
 
     public synchronized void removeClient() {

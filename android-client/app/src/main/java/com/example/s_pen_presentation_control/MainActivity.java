@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         mComputerRemoteViewModel = ViewModelProviders.of(this).get(ComputerRemoteViewModel.class);
-        mConnectDialog = new ConnectDialog();
+        mConnectDialog = new ConnectDialog(mComputerRemoteViewModel);
         mTutorialDialog = new TutorialDialog();
     }
 

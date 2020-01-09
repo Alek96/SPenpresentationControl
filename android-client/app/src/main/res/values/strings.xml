@@ -23,4 +23,12 @@
     <string name="connect_to_pc">Connect to computer</string>
     <string name="address">Address:</string>
     <string name="port">Port:</string>
+    <string name="default_ip_address">192.168.1.1</string>
+    <string name="default_port">1234</string>
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting…</string>
+    <string name="stop_connecting">Stop connecting</string>
+    <string name="address_is_required">Address is required</string>
+    <string name="port_is_required">Port is required</string>
+    <string name="connection_failed">Connection Failed</string>
 </resources>
