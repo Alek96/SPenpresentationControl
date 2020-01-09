@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.s_pen_presentation_control.ui.connect.ComputerRemoteViewModel;
 import com.example.s_pen_presentation_control.ui.connect.ConnectFragment;
 import com.example.s_pen_presentation_control.ui.control.ControlFragment;
 import com.example.s_pen_presentation_control.ui.tutorial.TutorialDialog;

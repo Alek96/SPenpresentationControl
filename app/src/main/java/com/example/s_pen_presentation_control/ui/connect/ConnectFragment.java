@@ -21,7 +21,7 @@ import com.example.s_pen_presentation_control.Tags;
 
 public class ConnectFragment extends Fragment {
 
-    private ConnectViewModel mViewModel;
+    private ComputerRemoteViewModel mComputerRemoteViewModel;
     private SPenRemoteViewModel sPenRemoteViewModel;
     private TextView mSpenConnectTextView;
     private TextView mComputerConnectTextView;
@@ -73,11 +73,18 @@ public class ConnectFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(Tags.APP_TAG, "onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ConnectViewModel.class);
+        mComputerRemoteViewModel = ViewModelProviders.of(getActivity()).get(ComputerRemoteViewModel.class);
         sPenRemoteViewModel = ViewModelProviders.of(getActivity()).get(SPenRemoteViewModel.class);
         sPenRemoteViewModel.checkSdkInfo();
         updateSPenConnectionTextView();
         updateComputerConnectionTextView();
+
+        mComputerRemoteViewModel.connect("192.168.1.92", 8081, new ComputerRemoteViewModel.OnConnect() {
+            @Override
+            public void onConnect(Boolean result) {
+                connectionSucceeded();
+            }
+        });
     }
 
     private void updateSPenConnectionTextView() {
@@ -94,18 +101,18 @@ public class ConnectFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onStart() {
-        Log.d(Tags.APP_TAG, "onStart");
-        super.onStart();
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                connectionSucceeded();
-            }
-        }, 100);
-    }
+//    @Override
+//    public void onStart() {
+//        Log.d(Tags.APP_TAG, "onStart");
+//        super.onStart();
+//
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                connectionSucceeded();
+//            }
+//        }, 100);
+//    }
 
     private void connectionSucceeded() {
         Log.d(Tags.APP_TAG, "connectionSucceeded");
