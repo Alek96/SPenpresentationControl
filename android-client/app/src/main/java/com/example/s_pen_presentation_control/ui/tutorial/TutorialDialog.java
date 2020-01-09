@@ -27,6 +27,7 @@ import butterknife.Unbinder;
 public class TutorialDialog extends DialogFragment {
 
     private TutorialViewModel mTutorialViewModel;
+    private TutorialDialogListener listener;
 
     private Unbinder unbinder;
 
@@ -38,8 +39,6 @@ public class TutorialDialog extends DialogFragment {
     TextView mDescriptionTextVew;
     @BindView(R.id.tutorial_progress_bar)
     ProgressBar mProgressBar;
-
-    private TutorialDialogListener listener;
 
 
     public interface TutorialDialogListener {
@@ -58,6 +57,13 @@ public class TutorialDialog extends DialogFragment {
                     + " must implement " + TutorialDialog.class.getSimpleName()
                     + "." + TutorialDialogListener.class.getSimpleName());
         }
+    }
+
+    @Override
+    public void onDetach() {
+        Log.d(Tags.APP_TAG, "onDetach");
+        super.onDetach();
+        listener = null;
     }
 
     @NonNull
@@ -120,6 +126,6 @@ public class TutorialDialog extends DialogFragment {
         mDescriptionTextVew.setText(mTutorialViewModel.getStage().getTextId());
         mButtonBack.setEnabled(!mTutorialViewModel.isFirstStage());
         mButtonNext.setText(mTutorialViewModel.isLastStage() ? R.string.close : R.string.next);
-        mProgressBar.setProgress(mTutorialViewModel.getStage().getPrograss());
+        mProgressBar.setProgress(mTutorialViewModel.getStage().getProgress());
     }
 }

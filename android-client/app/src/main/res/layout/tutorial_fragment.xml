@@ -10,21 +10,21 @@
     android:padding="10dp"
     tools:context=".ui.tutorial.TutorialDialog">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/tutorial_image_view"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:contentDescription="Tutorial image"-->
-<!--        app:srcCompat="@drawable/ic_launcher_background" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/tutorial_image_view"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:contentDescription="Tutorial image"-->
+    <!--        app:srcCompat="@drawable/ic_launcher_background" />-->
 
     <TextView
         android:id="@+id/tutorial_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="@string/tutorial_description_empty"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:text="@string/tutorial_description_empty" />
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/tutorial_progress_bar"

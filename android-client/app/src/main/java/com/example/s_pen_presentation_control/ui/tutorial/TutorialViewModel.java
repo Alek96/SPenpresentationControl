@@ -22,8 +22,8 @@ public class TutorialViewModel extends ViewModel {
             return mTextId;
         }
 
-        public int getPrograss() {
-            return 100 / (mValues.length - 2) * (this.ordinal() - 1);
+        public int getProgress() {
+            return 100 / (mValues.length - 3) * (this.ordinal() - 1);
         }
 
         public Stage getNext() {

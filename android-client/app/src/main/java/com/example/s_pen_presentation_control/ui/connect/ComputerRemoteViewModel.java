@@ -43,6 +43,10 @@ public class ComputerRemoteViewModel extends ViewModel {
         sendMessage("onSPenSwipeDown");
     }
 
+    public boolean isConnected() {
+        return client != null;
+    }
+
     public void connect(String address, int port, OnConnect onConnect) {
         if (client != null) {
             removeClient();
