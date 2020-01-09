@@ -1,0 +1,7 @@
+
+[squid:UselessImportCheck"0Remove this unused import 'java.io.PrintWriter'.(ÓÞÏÛ8¥ò­µø-
+Ssquid:S1191"5Use classes from the Java API instead of Sun classes.(ÛÖ ¢8ïíªµø-
+lsquid:UselessImportCheck"ARemove this unused import 'javax.net.ssl.SSLServerSocketFactory'.(”îß•8¥ò­µø-
+^squid:UselessImportCheck"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8¥ò­µø-
+[squid:UselessImportCheck"0Remove this unused import 'sun.rmi.runtime.Log'.(ÛÖ ¢8ïíªµø-
+asquid:UselessImportCheck"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ8¥ò­µø-
