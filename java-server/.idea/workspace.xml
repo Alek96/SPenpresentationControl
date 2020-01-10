@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04c94451-5600-4512-a801-d52e1af5c2a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MyKeyEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ComputerRemoteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ComputerRemoteViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/CommunicationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/CommunicationThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/MainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/MainClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,8 @@
       <option name="presentableId" value="Default" />
       <updated>1578437959673</updated>
       <workItem from="1578437964437" duration="6500000" />
-      <workItem from="1578601477097" duration="5954000" />
+      <workItem from="1578601477097" duration="6959000" />
+      <workItem from="1578669278113" duration="4697000" />
     </task>
     <servers />
   </component>
@@ -109,26 +106,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="260" y="276" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1578509654160" />
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1578610899053">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1578673920296">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578610899053" />
-    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1578610899052">
+    <state width="1807" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1578673920296" />
+    <state width="1807" height="278" key="GridCell.Tab.0.center" timestamp="1578673920296">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578610899052" />
-    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1578610899052">
+    <state width="1807" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1578673920296" />
+    <state width="1807" height="278" key="GridCell.Tab.0.left" timestamp="1578673920295">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578610899052" />
-    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1578610899052">
+    <state width="1807" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1578673920295" />
+    <state width="1807" height="278" key="GridCell.Tab.0.right" timestamp="1578673920296">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578610899052" />
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578601483038">
+    <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1578673920296" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog" timestamp="1578669286324">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578601483038" />
+    <state x="649" y="380" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1578669286324" />
     <state x="758" y="200" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1578437994137">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

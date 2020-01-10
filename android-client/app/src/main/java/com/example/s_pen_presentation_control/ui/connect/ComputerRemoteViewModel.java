@@ -5,9 +5,11 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.s_pen_presentation_control.MyKeyEvent;
 import com.example.s_pen_presentation_control.Tags;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ComputerRemoteViewModel extends ViewModel {
 
@@ -30,7 +32,8 @@ public class ComputerRemoteViewModel extends ViewModel {
 
     public void onSPenSwipeLeft() {
         Log.d(Tags.APP_TAG, "onSPenSwipeLeft");
-        sendMessage("onSPenSwipeLeft");
+        Integer[] myKeyEvents = new Integer[]{MyKeyEvent.VK_LEFT};
+        sendMessage(Arrays.toString(myKeyEvents));
     }
 
     public void onSPenSwipeUp() {

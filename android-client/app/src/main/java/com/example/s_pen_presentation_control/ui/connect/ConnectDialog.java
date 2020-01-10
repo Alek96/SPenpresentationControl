@@ -95,13 +95,6 @@ public class ConnectDialog extends DialogFragment {
         unbinder.unbind();
     }
 
-//    @Override
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        Log.d(Tags.APP_TAG, "onActivityCreated");
-//        super.onActivityCreated(savedInstanceState);
-//        mComputerRemoteViewModel = ViewModelProviders.of(getActivity()).get(ComputerRemoteViewModel.class);
-//    }
-
     @OnClick(R.id.connect_button)
     void onConnectButtonClick(View view) {
         Log.d(Tags.APP_TAG, "onConnectButtonClick");

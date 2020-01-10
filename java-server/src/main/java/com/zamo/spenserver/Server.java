@@ -1,7 +1,11 @@
 package com.zamo.spenserver;
 
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.*;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 
@@ -14,14 +18,19 @@ public class Server implements Runnable {
     private boolean running = true;
     private ServerSocket serverSocket = null;
     private CommunicationThread client = null;
+    Robot robot;
 
     public Server(int port) {
         try {
             String address = getAddress();
             serverSocket = new ServerSocket(port);
-            log.info("Server started on address {}. port {}", address, serverSocket.getLocalPort());
+            log.info("Server started on address {} port {}", address, serverSocket.getLocalPort());
+            robot = new Robot();
         } catch (IOException e) {
             log.error("Can not bind to port", e);
+        } catch (AWTException e) {
+            log.error("Can not create Robot", e);
+            e.printStackTrace();
         }
     }
 
@@ -33,15 +42,17 @@ public class Server implements Runnable {
             log.error("Can not get Network Interfaces", e);
             return "error";
         }
+        String address = "";
         for (NetworkInterface netInt : Collections.list(nets)) {
             Enumeration<InetAddress> inetAddresses = netInt.getInetAddresses();
             for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-                if (inetAddress.getHostAddress().contains("192.168.1.")) {
-                    return inetAddress.getHostAddress();
+                log.debug(inetAddress.getHostAddress());
+                if (netInt.getDisplayName().contains("wlo1") && inetAddress.getHostAddress().contains("192.168.")) {
+                    address = inetAddress.getHostAddress();
                 }
             }
         }
-        return "";
+        return address;
     }
 
     static void displayInterfaceInformation(NetworkInterface netint) {
@@ -104,6 +115,34 @@ public class Server implements Runnable {
         if (input.equals("exit")) {
             client.send("exit");
             removeClient();
+        } else {
+            parseInput(input);
+        }
+    }
+
+    private void parseInput(String input) {
+        int[] keyEvents = Arrays.stream(input.substring(1, input.length() - 1).split(","))
+                .map(String::trim).mapToInt(Integer::parseInt).toArray();
+
+        StringBuilder keysText = new StringBuilder().append('[');
+        for (int keyEvent : keyEvents) {
+            keysText.append(KeyEvent.getKeyText(keyEvent));
+        }
+        keysText.append(']');
+        log.debug("KeyEvents: {}", keysText);
+
+        for (int keyEvent : keyEvents) {
+            if (KeyEvent.getKeyText(keyEvent).contains("Unknown")) {
+                log.debug("not understand");
+                return;
+            }
+        }
+
+        for (int keyEvent : keyEvents) {
+            robot.keyPress(keyEvent);
+        }
+        for (int i = keyEvents.length - 1; i >= 0; i--) {
+            robot.keyRelease(keyEvents[i]);
         }
     }
 }
