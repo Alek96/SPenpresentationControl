@@ -28,7 +28,7 @@ import butterknife.Unbinder;
 public class ConnectDialog extends DialogFragment {
 
     private ComputerRemoteViewModel mComputerRemoteViewModel;
-    private OnConnectionSucceededListener listener;
+    private OnConnectionListener listener;
     private AppDatabase mDatabase;
     private SocketAddress socketAddress;
 
@@ -49,28 +49,23 @@ public class ConnectDialog extends DialogFragment {
         mDatabase = database;
     }
 
-    public interface OnConnectionSucceededListener {
+    public interface OnConnectionListener {
         void onConnectionSucceeded();
+
+        void onConnectionLost();
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         Log.d(Tags.APP_TAG, "onAttach");
         super.onAttach(context);
-        if (context instanceof OnConnectionSucceededListener) {
-            listener = (OnConnectionSucceededListener) context;
+        if (context instanceof OnConnectionListener) {
+            listener = (OnConnectionListener) context;
         } else {
             throw new ClassCastException(context.toString()
                     + " must implement " + ConnectDialog.class.getSimpleName()
-                    + "." + OnConnectionSucceededListener.class.getSimpleName());
+                    + "." + OnConnectionListener.class.getSimpleName());
         }
-    }
-
-    @Override
-    public void onDetach() {
-        Log.d(Tags.APP_TAG, "onDetach");
-        super.onDetach();
-        listener = null;
     }
 
     @NonNull
@@ -147,15 +142,25 @@ public class ConnectDialog extends DialogFragment {
         int port = Integer.valueOf(mPortEditTextVew.getText().toString());
         saveSocketAddress(address, port);
 
-        mComputerRemoteViewModel.connect(address, port, result -> {
-            if (result) {
+        mComputerRemoteViewModel.connect(address, port, onConnectionListener);
+    }
+
+    private ComputerRemoteViewModel.OnConnectionListener onConnectionListener = new ComputerRemoteViewModel.OnConnectionListener() {
+        @Override
+        public void onConnect(Boolean result) {
+            if (Boolean.TRUE.equals(result)) {
                 listener.onConnectionSucceeded();
             } else {
                 mErrorTextVew.setText(R.string.connection_failed);
                 mConnectButton.setText(R.string.connect);
             }
-        });
-    }
+        }
+
+        @Override
+        public void onConnectionLost() {
+            listener.onConnectionLost();
+        }
+    };
 
     private boolean validateAddress() {
         String address = mAddressEditTextVew.getText().toString();

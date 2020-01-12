@@ -18,7 +18,7 @@ import com.wpam.spenpresentationcontrol.ui.tutorial.TutorialDialog;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements ConnectDialog.OnConnectionSucceededListener, TutorialDialog.TutorialDialogListener {
+public class MainActivity extends AppCompatActivity implements ConnectDialog.OnConnectionListener, TutorialDialog.TutorialDialogListener {
 
     private ComputerRemoteViewModel mComputerRemoteViewModel;
     AppDatabase database;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         ButterKnife.bind(this);
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "myapp.db").fallbackToDestructiveMigration().build();
         mComputerRemoteViewModel = ViewModelProviders.of(this).get(ComputerRemoteViewModel.class);
-        mComputerRemoteViewModel.setupDatabas(database);
+        mComputerRemoteViewModel.setupDatabase(database);
         mConnectDialog = new ConnectDialog(mComputerRemoteViewModel, database);
         mTutorialDialog = new TutorialDialog();
     }
@@ -57,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         Log.d(Tags.APP_TAG, "onConnectionSucceeded");
         mConnectDialog.dismiss();
         mTutorialDialog.show(getSupportFragmentManager(), "dialog_tutorial");
+    }
+
+    @Override
+    public void onConnectionLost() {
+        Log.d(Tags.APP_TAG, "onConnectionLost, isConnected: " + mComputerRemoteViewModel.isConnected());
+        mConnectDialog.show(getSupportFragmentManager(), "dialog_connect");
     }
 
     @Override

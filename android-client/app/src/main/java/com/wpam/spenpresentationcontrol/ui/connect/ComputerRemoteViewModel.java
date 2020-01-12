@@ -1,6 +1,5 @@
 package com.wpam.spenpresentationcontrol.ui.connect;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -8,13 +7,11 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.wpam.spenpresentationcontrol.MyKeyEvent;
 import com.wpam.spenpresentationcontrol.Tags;
 import com.wpam.spenpresentationcontrol.model.AppDatabase;
 import com.wpam.spenpresentationcontrol.model.SPenEvent;
 
 import java.io.IOException;
-import java.lang.reflect.Executable;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -24,12 +21,13 @@ public class ComputerRemoteViewModel extends ViewModel {
     private Handler mainHandler = new Handler(Looper.getMainLooper());
     private AppDatabase database;
     private HashMap<String, SPenEvent> sPenEventHashMap;
+    private OnConnectionListener onConnectionListener;
 
     public ComputerRemoteViewModel() {
         sPenEventHashMap = new HashMap<>();
     }
 
-    public void setupDatabas(AppDatabase database) {
+    public void setupDatabase(AppDatabase database) {
         this.database = database;
         new Thread(pullSPenEvents).start();
     }
@@ -93,28 +91,31 @@ public class ComputerRemoteViewModel extends ViewModel {
         return client != null;
     }
 
-    void connect(String address, int port, OnConnect onConnect) {
+    void connect(String address, int port, OnConnectionListener onConnectionListener) {
         Log.d(Tags.APP_TAG, "connect, address: " + address + ", port: " + port);
+        this.onConnectionListener = onConnectionListener;
         if (client != null) {
             Log.d(Tags.APP_TAG, "client is not null -> remove");
             removeClient();
         }
-        new ConnectTask(address, port, onConnect).execute();
+        new ConnectTask(address, port, onConnectionListener).execute();
     }
 
-    public interface OnConnect {
+    public interface OnConnectionListener {
         public void onConnect(Boolean result);
+
+        public void onConnectionLost();
     }
 
     private class ConnectTask extends AsyncTask<Void, String, Boolean> {
         private String address;
         private int port;
-        OnConnect onConnect;
+        OnConnectionListener onConnectionListener;
 
-        private ConnectTask(String address, int port, OnConnect onConnect) {
+        private ConnectTask(String address, int port, OnConnectionListener onConnectionListener) {
             this.address = address;
             this.port = port;
-            this.onConnect = onConnect;
+            this.onConnectionListener = onConnectionListener;
         }
 
         @Override
@@ -136,11 +137,14 @@ public class ComputerRemoteViewModel extends ViewModel {
             if (Boolean.TRUE.equals(result)) {
                 new Thread(new receivedTask()).start();
             }
-            onConnect.onConnect(result);
+            onConnectionListener.onConnect(result);
         }
     }
 
-    private Client.OnClientRemove onClientRemove = this::removeClient;
+    private Client.OnClientRemove onClientRemove = () -> {
+        removeClient();
+        onConnectionListener.onConnectionLost();
+    };
 
     synchronized void removeClient() {
         Log.i(Tags.APP_TAG, "Remove client");
