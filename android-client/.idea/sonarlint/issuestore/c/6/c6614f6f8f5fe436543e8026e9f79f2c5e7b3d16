@@ -1,7 +1,0 @@
-
-Nsquid:S1068"+Remove this unused "handler" private field.(á¹Ý¶þÿÿÿÿ8êÕ¶¼ø-
-nsquid:CommentedOutCodeLineo"<This block of commented-out lines of code should be removed.(áíüÈùÿÿÿÿ8êÕ¶¼ø-
-hsquid:CommentedOutCodeLinem"<This block of commented-out lines of code should be removed.(âì¾\8êÕ¶¼ø-
-Šsquid:S1450"gRemove the "mComputerRemoteViewModel" field and declare it as a local variable in the relevant methods.(ðŠÊùÿÿÿÿ8€‰Ü»ø-
-nsquid:CommentedOutCodeLinei"<This block of commented-out lines of code should be removed.(Ã¦ÀÁüÿÿÿÿ8êÕ¶¼ø-
-Fsquid:S1604R"(Make this anonymous inner class a lambda(¥¢Šˆ8è·¼ø-
