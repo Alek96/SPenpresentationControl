@@ -100,10 +100,12 @@ public class ConnectDialog extends DialogFragment {
         new Thread(() -> {
             Log.d(Tags.APP_TAG, "Pull SocketAddress");
             socketAddress = mDatabase.socketAddressDao().getFirst();
-            if (socketAddress != null) {
+            if (socketAddress == null) {
+                Log.d(Tags.APP_TAG, "SocketAddress not exist in database");
+            } else {
                 updateViewBySocketAddress();
             }
-        });
+        }).start();
     }
 
     private void updateViewBySocketAddress() {
@@ -112,7 +114,7 @@ public class ConnectDialog extends DialogFragment {
             getActivity().runOnUiThread(() -> {
                 Log.d(Tags.APP_TAG, "updateViewBySocketAddress");
                 mAddressEditTextVew.setText(socketAddress.address);
-                mPortEditTextVew.setText(socketAddress.port);
+                mPortEditTextVew.setText(String.valueOf(socketAddress.port));
             });
         }
     }
@@ -187,7 +189,7 @@ public class ConnectDialog extends DialogFragment {
         new Thread(() -> {
             Log.d(Tags.APP_TAG, "Insert SocketAddress");
             mDatabase.socketAddressDao().insertAll(socketAddress);
-        });
+        }).start();
     }
 
     private void updateSocketAddress(String address, int port) {
@@ -196,6 +198,6 @@ public class ConnectDialog extends DialogFragment {
         new Thread(() -> {
             Log.d(Tags.APP_TAG, "Update SocketAddress");
             mDatabase.socketAddressDao().updateAll(socketAddress);
-        });
+        }).start();
     }
 }
