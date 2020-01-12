@@ -6,6 +6,7 @@ import com.wpam.spenpresentationcontrol.Tags;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -50,9 +51,19 @@ class Client {
     }
 
     void run(OnMessageReceived onMessageReceived) {
+        int readBytes = 0;
+        byte[] buffer = new byte[4092];
+        ByteArrayOutputStream byteStream;
+
         try {
             while (connected) {
-                onMessageReceived.onMessageReceived(dis.readUTF());
+                byteStream = new ByteArrayOutputStream();
+                int remainingBytes = dis.readInt();
+                while (remainingBytes > 0 && (readBytes = dis.read(buffer, 0, (int) Math.min(buffer.length, remainingBytes))) != -1) {
+                    byteStream.write(buffer, 0, readBytes);
+                    remainingBytes -= readBytes;
+                }
+                onMessageReceived.onMessageReceived(byteStream.toString());
             }
         } catch (IOException e) {
             Log.d(Tags.APP_TAG, "Client " + socket.getRemoteSocketAddress() + " error sending:" + e.getMessage());

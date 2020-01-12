@@ -1,8 +1,11 @@
 package com.wpam.spenpresentationcontrol.ui.connect;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
@@ -22,6 +25,7 @@ public class ComputerRemoteViewModel extends ViewModel {
     private AppDatabase database;
     private HashMap<String, SPenEvent> sPenEventHashMap;
     private OnConnectionListener onConnectionListener;
+    private IncomingMessageListener incomingMessageListener;
 
     public ComputerRemoteViewModel() {
         sPenEventHashMap = new HashMap<>();
@@ -171,15 +175,31 @@ public class ComputerRemoteViewModel extends ViewModel {
         }
 
         private Client.OnMessageReceived onMessageReceived = message -> {
-            Log.d(Tags.APP_TAG, "incomingMessage, input: " + message);
+            Log.d(Tags.APP_TAG, "incomingMessage, message length: " + message.length());
             if (message.equals("exit")) {
                 Log.d(Tags.APP_TAG, "received exit commend");
                 removeClient();
             }
+            Bitmap imageBitmap = decodeToImage(message);
             mainHandler.post(() -> {
-                //Your code to run in GUI thread here
+                if (incomingMessageListener != null) {
+                    incomingMessageListener.onIncomingScreenshot(imageBitmap);
+                }
             });
         };
+
+        private Bitmap decodeToImage(String base64String) {
+            byte[] imageArr = Base64.decode(base64String.getBytes(), Base64.NO_WRAP);
+            return BitmapFactory.decodeByteArray(imageArr, 0, imageArr.length);
+        }
+    }
+
+    public interface IncomingMessageListener {
+        public void onIncomingScreenshot(Bitmap imageBitmap);
+    }
+
+    public void setIncomingMessageListener(IncomingMessageListener incomingMessageListener) {
+        this.incomingMessageListener = incomingMessageListener;
     }
 
     private synchronized void sendMessage(String message) {

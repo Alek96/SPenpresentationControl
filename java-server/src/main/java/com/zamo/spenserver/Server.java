@@ -1,8 +1,9 @@
 package com.zamo.spenserver;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.Arrays;
@@ -12,11 +13,15 @@ import java.util.LinkedList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Encoder;
+
+import javax.imageio.ImageIO;
 
 public class Server implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(Server.class.getSimpleName());
 
     private boolean running = true;
+    private boolean sendingScreenshots = true;
     private ServerSocket serverSocket = null;
     private CommunicationThread client = null;
     Robot robot;
@@ -66,10 +71,12 @@ public class Server implements Runnable {
                 log.error("Server accept error", e);
                 stop();
             }
+            startSendingScreenshots();
         }
     }
 
-    private void acceptClient(Socket socket) {
+    private synchronized void acceptClient(Socket socket) {
+        sendingScreenshots = true;
         if (client == null) {
             client = new CommunicationThread(this, socket);
             client.start();
@@ -86,18 +93,41 @@ public class Server implements Runnable {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            log.error("Error while closing serverSocket", e);
+            log.debug("Error while closing serverSocket", e);
         }
     }
 
-    public synchronized void removeClient() {
-        log.info("Remove client");
-        try {
-            client.close();
-        } catch (IOException e) {
-            log.error("Error closing thread", e);
+    private void startSendingScreenshots() {
+        while (running && sendingScreenshots && client != null) {
+            BufferedImage image = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+            String encodedImage = encodeToString(image, "png");
+            sendMessage(encodedImage);
         }
-        client = null;
+    }
+
+    private synchronized void sendMessage(String message) {
+        if (client != null) {
+            client.send(message);
+        }
+    }
+
+    public String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+
+            BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
+            log.error("Error while encode image to string", e);
+            sendingScreenshots = false;
+        }
+        return imageString;
     }
 
     public synchronized void incomingMessage(String input) {
@@ -108,6 +138,18 @@ public class Server implements Runnable {
         } else {
             parseInput(input);
         }
+    }
+
+    public synchronized void removeClient() {
+        log.info("Remove client");
+        try {
+            if (client != null) {
+                client.close();
+            }
+        } catch (IOException e) {
+            log.debug("Error closing thread", e);
+        }
+        client = null;
     }
 
     private void parseInput(String input) {

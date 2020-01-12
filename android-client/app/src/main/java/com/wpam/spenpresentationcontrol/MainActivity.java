@@ -1,9 +1,11 @@
 package com.wpam.spenpresentationcontrol;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -15,15 +17,19 @@ import com.wpam.spenpresentationcontrol.ui.connect.ComputerRemoteViewModel;
 import com.wpam.spenpresentationcontrol.ui.connect.ConnectDialog;
 import com.wpam.spenpresentationcontrol.ui.tutorial.TutorialDialog;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements ConnectDialog.OnConnectionListener, TutorialDialog.TutorialDialogListener {
+public class MainActivity extends AppCompatActivity implements ConnectDialog.OnConnectionListener, TutorialDialog.TutorialDialogListener, ComputerRemoteViewModel.IncomingMessageListener {
 
     private ComputerRemoteViewModel mComputerRemoteViewModel;
     AppDatabase database;
     private TutorialDialog mTutorialDialog;
     private ConnectDialog mConnectDialog;
+
+    @BindView(R.id.screen_view)
+    ImageView mScreenView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "myapp.db").fallbackToDestructiveMigration().build();
         mComputerRemoteViewModel = ViewModelProviders.of(this).get(ComputerRemoteViewModel.class);
         mComputerRemoteViewModel.setupDatabase(database);
+        mComputerRemoteViewModel.setIncomingMessageListener(this);
         mConnectDialog = new ConnectDialog(mComputerRemoteViewModel, database);
         mTutorialDialog = new TutorialDialog();
     }
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
     @Override
     public void onConnectionLost() {
         Log.d(Tags.APP_TAG, "onConnectionLost, isConnected: " + mComputerRemoteViewModel.isConnected());
+        mTutorialDialog.dismiss();
         mConnectDialog.show(getSupportFragmentManager(), "dialog_connect");
     }
 
@@ -69,6 +77,16 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
     public void onTutorialDialogFinished(DialogFragment dialog) {
         Log.d(Tags.APP_TAG, "onTutorialDialogFinished");
         mTutorialDialog.dismiss();
+    }
+
+    @Override
+    public void onIncomingScreenshot(Bitmap imageBitmap) {
+        Log.d(Tags.APP_TAG, "onIncomingScreenshot");
+        try {
+            mScreenView.setImageBitmap(imageBitmap);
+        } catch (Exception e) {
+            Log.d(Tags.APP_TAG, "onIncomingScreenshot error: " + e.getMessage());
+        }
     }
 
     @OnClick(R.id.control_button_click)

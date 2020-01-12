@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.Socket;
 
 public class CommunicationThread extends Thread {
@@ -24,7 +25,9 @@ public class CommunicationThread extends Thread {
     public void send(String message) {
         log.debug("Send, message size {} ", message.length());
         try {
-            dos.writeUTF(message);
+            byte[] messageByte = message.getBytes("utf-8");
+            dos.writeInt(messageByte.length);
+            dos.write(messageByte);
             dos.flush();
         } catch (IOException e) {
             log.debug("Client {} error sending: {}", socket.getRemoteSocketAddress(), e.getMessage());
@@ -44,7 +47,7 @@ public class CommunicationThread extends Thread {
                 server.incomingMessage(dis.readUTF());
             }
         } catch (IOException e) {
-            //System.out.println("Client " + socket.getRemoteSocketAddress() + " error reading : " + e.getMessage());
+            log.debug("Client {} error receiving: {}", socket.getRemoteSocketAddress(), e.getMessage());
             server.removeClient();
         }
     }
@@ -54,7 +57,7 @@ public class CommunicationThread extends Thread {
         if (!running) {
             return;
         }
-        running = true;
+        running = false;
         socket.close();
         dis.close();
         dos.close();
