@@ -1,5 +1,6 @@
 package com.wpam.spenpresentationcontrol.ui.connect;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,51 +10,90 @@ import androidx.lifecycle.ViewModel;
 
 import com.wpam.spenpresentationcontrol.MyKeyEvent;
 import com.wpam.spenpresentationcontrol.Tags;
+import com.wpam.spenpresentationcontrol.model.AppDatabase;
+import com.wpam.spenpresentationcontrol.model.SPenEvent;
 
 import java.io.IOException;
+import java.lang.reflect.Executable;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class ComputerRemoteViewModel extends ViewModel {
 
     private Client client = null;
-    Handler mainHandler = new Handler(Looper.getMainLooper());
+    private Handler mainHandler = new Handler(Looper.getMainLooper());
+    private AppDatabase database;
+    private HashMap<String, SPenEvent> sPenEventHashMap;
+
+    public ComputerRemoteViewModel() {
+        sPenEventHashMap = new HashMap<>();
+    }
+
+    public void setupDatabas(AppDatabase database) {
+        this.database = database;
+        new Thread(pullSPenEvents).start();
+    }
+
+    private Runnable pullSPenEvents = () -> {
+        Log.d(Tags.APP_TAG, "Pull SPenEvents");
+        for (SPenEvent.SPenEventId sPenEventId : SPenEvent.SPenEventId.values()) {
+            SPenEvent sPenEvent = database.sPenEventDao().get(sPenEventId.getId());
+            if (sPenEvent == null) {
+                Log.d(Tags.APP_TAG, "SPenEvent with is " + sPenEventId.getId() + " not found in database. Use default value");
+                sPenEventHashMap.put(sPenEventId.getId(), new SPenEvent(sPenEventId));
+            } else {
+                sPenEventHashMap.put(sPenEvent.id, sPenEvent);
+            }
+
+        }
+    };
 
     public void onSPenClick() {
         Log.d(Tags.APP_TAG, "onSPenClick");
-        sendMessage("onSPenClick");
+        onSPenEvent(SPenEvent.SPenEventId.CLICK);
     }
 
     public void onSPenDoubleClick() {
         Log.d(Tags.APP_TAG, "onSPenDoubleClick");
-        sendMessage("onSPenDoubleClick");
+        onSPenEvent(SPenEvent.SPenEventId.DOUBLE_CLICK);
     }
 
     public void onSPenSwipeRight() {
         Log.d(Tags.APP_TAG, "onSPenSwipeRight");
-        sendMessage("onSPenSwipeRight");
+        onSPenEvent(SPenEvent.SPenEventId.SWIPE_RIGHT);
     }
 
     public void onSPenSwipeLeft() {
         Log.d(Tags.APP_TAG, "onSPenSwipeLeft");
-        Integer[] myKeyEvents = new Integer[]{MyKeyEvent.VK_LEFT};
-        sendMessage(Arrays.toString(myKeyEvents));
+        onSPenEvent(SPenEvent.SPenEventId.SWIPE_LEFT);
     }
 
     public void onSPenSwipeUp() {
         Log.d(Tags.APP_TAG, "onSPenSwipeUp");
-        sendMessage("onSPenSwipeUp");
+        onSPenEvent(SPenEvent.SPenEventId.SWIPE_UP);
     }
 
     public void onSPenSwipeDown() {
         Log.d(Tags.APP_TAG, "onSPenSwipeDown");
-        sendMessage("onSPenSwipeDown");
+        onSPenEvent(SPenEvent.SPenEventId.SWIPE_DOWN);
+    }
+
+    private void onSPenEvent(SPenEvent.SPenEventId sPenEventId) {
+        Log.d(Tags.APP_TAG, "onSPenEventId: " + sPenEventId.getId());
+        SPenEvent sPenEvent = sPenEventHashMap.get(sPenEventId.getId());
+        if (sPenEvent == null) {
+            Log.d(Tags.APP_TAG, "onSPenEventId " + sPenEventId.getId() + " not configured");
+            return;
+        }
+        Integer[] myKeyEvents = new Integer[]{sPenEvent.keyEvent};
+        sendMessage(Arrays.toString(myKeyEvents));
     }
 
     public boolean isConnected() {
         return client != null;
     }
 
-    public void connect(String address, int port, OnConnect onConnect) {
+    void connect(String address, int port, OnConnect onConnect) {
         Log.d(Tags.APP_TAG, "connect, address: " + address + ", port: " + port);
         if (client != null) {
             Log.d(Tags.APP_TAG, "client is not null -> remove");

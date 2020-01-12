@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "myapp.db").build();
+        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "myapp.db").fallbackToDestructiveMigration().build();
         mComputerRemoteViewModel = ViewModelProviders.of(this).get(ComputerRemoteViewModel.class);
+        mComputerRemoteViewModel.setupDatabas(database);
         mConnectDialog = new ConnectDialog(mComputerRemoteViewModel, database);
         mTutorialDialog = new TutorialDialog();
     }

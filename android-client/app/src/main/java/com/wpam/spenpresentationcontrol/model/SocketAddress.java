@@ -7,9 +7,7 @@ import androidx.room.PrimaryKey;
 public class SocketAddress {
     @PrimaryKey
     public int id;
-
     public String address;
-
     public Integer port;
 
     public SocketAddress(String address, Integer port) {
