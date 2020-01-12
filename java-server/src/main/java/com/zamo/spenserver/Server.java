@@ -8,6 +8,7 @@ import java.net.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.LinkedList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,11 @@ public class Server implements Runnable {
             log.error("Can not bind to port", e);
         } catch (AWTException e) {
             log.error("Can not create Robot", e);
-            e.printStackTrace();
         }
     }
 
     private String getAddress() {
+        log.debug("Display InetAddress");
         Enumeration<NetworkInterface> nets = null;
         try {
             nets = NetworkInterface.getNetworkInterfaces();
@@ -46,23 +47,13 @@ public class Server implements Runnable {
         for (NetworkInterface netInt : Collections.list(nets)) {
             Enumeration<InetAddress> inetAddresses = netInt.getInetAddresses();
             for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-                log.debug(inetAddress.getHostAddress());
-                if (netInt.getDisplayName().contains("wlo1") && inetAddress.getHostAddress().contains("192.168.")) {
+                log.debug("InetAddress: {}/{}", netInt.getName(), inetAddress.getHostAddress());
+                if (inetAddress.getHostAddress().contains("192.168.")) {
                     address = inetAddress.getHostAddress();
                 }
             }
         }
         return address;
-    }
-
-    static void displayInterfaceInformation(NetworkInterface netint) {
-        log.debug("Display name: {}", netint.getDisplayName());
-        log.debug("Name: {}", netint.getName());
-        Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
-        for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-            log.debug("InetAddress: {}", inetAddress);
-        }
-        log.debug("\n");
     }
 
     @Override
@@ -95,7 +86,6 @@ public class Server implements Runnable {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
             log.error("Error while closing serverSocket", e);
         }
     }
@@ -124,15 +114,14 @@ public class Server implements Runnable {
         int[] keyEvents = Arrays.stream(input.substring(1, input.length() - 1).split(","))
                 .map(String::trim).mapToInt(Integer::parseInt).toArray();
 
-        StringBuilder keysText = new StringBuilder().append('[');
+        LinkedList<String> keysText = new LinkedList<>();
         for (int keyEvent : keyEvents) {
-            keysText.append(KeyEvent.getKeyText(keyEvent));
+            keysText.add(KeyEvent.getKeyText(keyEvent));
         }
-        keysText.append(']');
         log.debug("KeyEvents: {}", keysText);
 
-        for (int keyEvent : keyEvents) {
-            if (KeyEvent.getKeyText(keyEvent).contains("Unknown")) {
+        for (String keyText : keysText) {
+            if (keyText.contains("Unknown")) {
                 log.debug("not understand");
                 return;
             }
