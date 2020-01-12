@@ -1,8 +1,8 @@
-package com.example.s_pen_presentation_control.ui.tutorial;
+package com.wpam.spenpresentationcontrol.ui.tutorial;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.s_pen_presentation_control.R;
+import com.wpam.spenpresentationcontrol.R;
 
 public class TutorialViewModel extends ViewModel {
     public enum Stage {

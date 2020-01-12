@@ -1,5 +1,6 @@
-package com.example.s_pen_presentation_control.ui.connect;
+package com.wpam.spenpresentationcontrol.ui.connect;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,8 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.s_pen_presentation_control.R;
-import com.example.s_pen_presentation_control.Tags;
+import com.wpam.spenpresentationcontrol.R;
+import com.wpam.spenpresentationcontrol.Tags;
+import com.wpam.spenpresentationcontrol.model.AppDatabase;
+import com.wpam.spenpresentationcontrol.model.SocketAddress;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +29,8 @@ public class ConnectDialog extends DialogFragment {
 
     private ComputerRemoteViewModel mComputerRemoteViewModel;
     private OnConnectionSucceededListener listener;
+    private AppDatabase mDatabase;
+    private SocketAddress socketAddress;
 
     private Unbinder unbinder;
 
@@ -39,8 +44,9 @@ public class ConnectDialog extends DialogFragment {
     Button mConnectButton;
 
 
-    public ConnectDialog(ComputerRemoteViewModel computerRemoteViewModel) {
+    public ConnectDialog(ComputerRemoteViewModel computerRemoteViewModel, AppDatabase database) {
         this.mComputerRemoteViewModel = computerRemoteViewModel;
+        mDatabase = database;
     }
 
     public interface OnConnectionSucceededListener {
@@ -79,6 +85,8 @@ public class ConnectDialog extends DialogFragment {
         unbinder = ButterKnife.bind(this, view);
         builder.setView(view);
 
+        pullSocketAddress();
+
         Dialog dialog = builder.create();
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
@@ -86,6 +94,27 @@ public class ConnectDialog extends DialogFragment {
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_rounded_bg);
         }
         return dialog;
+    }
+
+    private void pullSocketAddress() {
+        new Thread(() -> {
+            Log.d(Tags.APP_TAG, "Pull SocketAddress");
+            socketAddress = mDatabase.socketAddressDao().getFirst();
+            if (socketAddress != null) {
+                updateViewBySocketAddress();
+            }
+        });
+    }
+
+    private void updateViewBySocketAddress() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            getActivity().runOnUiThread(() -> {
+                Log.d(Tags.APP_TAG, "updateViewBySocketAddress");
+                mAddressEditTextVew.setText(socketAddress.address);
+                mPortEditTextVew.setText(socketAddress.port);
+            });
+        }
     }
 
     @Override
@@ -114,6 +143,7 @@ public class ConnectDialog extends DialogFragment {
 
         String address = mAddressEditTextVew.getText().toString();
         int port = Integer.valueOf(mPortEditTextVew.getText().toString());
+        saveSocketAddress(address, port);
 
         mComputerRemoteViewModel.connect(address, port, result -> {
             if (result) {
@@ -141,5 +171,31 @@ public class ConnectDialog extends DialogFragment {
             return false;
         }
         return true;
+    }
+
+    private void saveSocketAddress(String address, int port) {
+        Log.d(Tags.APP_TAG, "saveSocketAddress, address: " + address + ", port: " + port);
+        if (socketAddress == null) {
+            insertSocketAddress(new SocketAddress(address, port));
+        } else {
+            updateSocketAddress(address, port);
+        }
+    }
+
+    private void insertSocketAddress(SocketAddress socketAddress) {
+        this.socketAddress = socketAddress;
+        new Thread(() -> {
+            Log.d(Tags.APP_TAG, "Insert SocketAddress");
+            mDatabase.socketAddressDao().insertAll(socketAddress);
+        });
+    }
+
+    private void updateSocketAddress(String address, int port) {
+        socketAddress.address = address;
+        socketAddress.port = port;
+        new Thread(() -> {
+            Log.d(Tags.APP_TAG, "Update SocketAddress");
+            mDatabase.socketAddressDao().updateAll(socketAddress);
+        });
     }
 }

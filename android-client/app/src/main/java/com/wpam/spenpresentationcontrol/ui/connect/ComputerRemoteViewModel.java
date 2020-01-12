@@ -1,12 +1,14 @@
-package com.example.s_pen_presentation_control.ui.connect;
+package com.wpam.spenpresentationcontrol.ui.connect;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.s_pen_presentation_control.MyKeyEvent;
-import com.example.s_pen_presentation_control.Tags;
+import com.wpam.spenpresentationcontrol.MyKeyEvent;
+import com.wpam.spenpresentationcontrol.Tags;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import java.util.Arrays;
 public class ComputerRemoteViewModel extends ViewModel {
 
     private Client client = null;
+    Handler mainHandler = new Handler(Looper.getMainLooper());
 
     public void onSPenClick() {
         Log.d(Tags.APP_TAG, "onSPenClick");
@@ -91,7 +94,7 @@ public class ComputerRemoteViewModel extends ViewModel {
         protected void onPostExecute(Boolean result) {
             Log.d(Tags.APP_TAG, "onPostExecute, connection result: " + result);
             if (Boolean.TRUE.equals(result)) {
-                new receivedTask().execute();
+                new Thread(new receivedTask()).start();
             }
             onConnect.onConnect(result);
         }
@@ -99,7 +102,7 @@ public class ComputerRemoteViewModel extends ViewModel {
 
     private Client.OnClientRemove onClientRemove = this::removeClient;
 
-    public synchronized void removeClient() {
+    synchronized void removeClient() {
         Log.i(Tags.APP_TAG, "Remove client");
         try {
             if (client != null && client.isConnected()) {
@@ -111,35 +114,28 @@ public class ComputerRemoteViewModel extends ViewModel {
         client = null;
     }
 
-    private class receivedTask extends AsyncTask<Void, String, Void> {
+    private class receivedTask implements Runnable {
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        public void run() {
             Log.d(Tags.APP_TAG, "doInBackground, start receivedTask");
             if (client == null) {
                 Log.d(Tags.APP_TAG, "client is null");
-                return null;
+                return;
             }
             client.run(onMessageReceived);
-
-            return null;
         }
 
-        private Client.OnMessageReceived onMessageReceived = this::publishProgress;
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            incomingMessage(values[0]);
-        }
-
-        private synchronized void incomingMessage(String input) {
-            Log.d(Tags.APP_TAG, "incomingMessage, input: " + input);
-            if (input.equals("exit")) {
+        private Client.OnMessageReceived onMessageReceived = message -> {
+            Log.d(Tags.APP_TAG, "incomingMessage, input: " + message);
+            if (message.equals("exit")) {
                 Log.d(Tags.APP_TAG, "received exit commend");
                 removeClient();
             }
-        }
+            mainHandler.post(() -> {
+                //Your code to run in GUI thread here
+            });
+        };
     }
 
     private synchronized void sendMessage(String message) {

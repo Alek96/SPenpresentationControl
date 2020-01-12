@@ -1,4 +1,4 @@
-package com.example.s_pen_presentation_control.ui.connect;
+package com.wpam.spenpresentationcontrol.ui.connect;
 
 import androidx.lifecycle.ViewModel;
 

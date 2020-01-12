@@ -1,4 +1,4 @@
-package com.example.s_pen_presentation_control;
+package com.wpam.spenpresentationcontrol;
 
 public class Tags {
     public static final String APP_TAG = "SPenTest";

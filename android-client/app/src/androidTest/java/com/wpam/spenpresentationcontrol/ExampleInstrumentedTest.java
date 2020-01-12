@@ -1,4 +1,4 @@
-package com.example.s_pen_presentation_control;
+package com.wpam.spenpresentationcontrol;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.SPenPresentationControl", appContext.getPackageName());
+        assertEquals("com.wpam.spenpresentationcontrol", appContext.getPackageName());
     }
 }

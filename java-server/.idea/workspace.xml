@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04c94451-5600-4512-a801-d52e1af5c2a6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MyKeyEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ComputerRemoteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ComputerRemoteViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zamo/spenserver/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/connect/SocketAddress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/androidTest/java/com/example/s_pen_presentation_control/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/androidTest/java/com/wpam/spenpresentationcontrol/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/MyKeyEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/MyKeyEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/SPenRemoteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/SPenRemoteViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/Tags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/connect/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ComputerRemoteViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/connect/ComputerRemoteViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/connect/ConnectDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/connect/ConnectViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/connect/ConnectViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/tutorial/TutorialDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/tutorial/TutorialDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/main/java/com/example/s_pen_presentation_control/ui/tutorial/TutorialViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/main/java/com/wpam/spenpresentationcontrol/ui/tutorial/TutorialViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/app/src/test/java/com/example/s_pen_presentation_control/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/app/src/test/java/com/wpam/spenpresentationcontrol/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../android-client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../android-client/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +101,7 @@
       <updated>1578437959673</updated>
       <workItem from="1578437964437" duration="6500000" />
       <workItem from="1578601477097" duration="6959000" />
-      <workItem from="1578669278113" duration="4697000" />
+      <workItem from="1578669278113" duration="5279000" />
     </task>
     <servers />
   </component>

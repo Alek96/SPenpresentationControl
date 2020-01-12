@@ -1,4 +1,4 @@
-package com.example.s_pen_presentation_control;
+package com.wpam.spenpresentationcontrol;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +8,12 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Room;
 
-import com.example.s_pen_presentation_control.ui.connect.ComputerRemoteViewModel;
-import com.example.s_pen_presentation_control.ui.connect.ConnectDialog;
-import com.example.s_pen_presentation_control.ui.tutorial.TutorialDialog;
+import com.wpam.spenpresentationcontrol.model.AppDatabase;
+import com.wpam.spenpresentationcontrol.ui.connect.ComputerRemoteViewModel;
+import com.wpam.spenpresentationcontrol.ui.connect.ConnectDialog;
+import com.wpam.spenpresentationcontrol.ui.tutorial.TutorialDialog;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements ConnectDialog.OnConnectionSucceededListener, TutorialDialog.TutorialDialogListener {
 
     private ComputerRemoteViewModel mComputerRemoteViewModel;
+    AppDatabase database;
     private TutorialDialog mTutorialDialog;
     private ConnectDialog mConnectDialog;
 
@@ -28,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
+        database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "myapp.db").build();
         mComputerRemoteViewModel = ViewModelProviders.of(this).get(ComputerRemoteViewModel.class);
-        mConnectDialog = new ConnectDialog(mComputerRemoteViewModel);
+        mConnectDialog = new ConnectDialog(mComputerRemoteViewModel, database);
         mTutorialDialog = new TutorialDialog();
     }
 
@@ -39,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements ConnectDialog.OnC
         if (!mComputerRemoteViewModel.isConnected()) {
             mConnectDialog.show(getSupportFragmentManager(), "dialog_connect");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        database.close();
     }
 
     @Override

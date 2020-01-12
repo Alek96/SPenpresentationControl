@@ -1,8 +1,8 @@
-package com.example.s_pen_presentation_control.ui.connect;
+package com.wpam.spenpresentationcontrol.ui.connect;
 
 import android.util.Log;
 
-import com.example.s_pen_presentation_control.Tags;
+import com.wpam.spenpresentationcontrol.Tags;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

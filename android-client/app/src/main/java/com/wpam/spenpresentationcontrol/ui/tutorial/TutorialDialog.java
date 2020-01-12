@@ -1,4 +1,4 @@
-package com.example.s_pen_presentation_control.ui.tutorial;
+package com.wpam.spenpresentationcontrol.ui.tutorial;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.s_pen_presentation_control.R;
-import com.example.s_pen_presentation_control.Tags;
+import com.wpam.spenpresentationcontrol.R;
+import com.wpam.spenpresentationcontrol.Tags;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
