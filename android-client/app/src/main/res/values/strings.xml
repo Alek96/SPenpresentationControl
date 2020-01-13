@@ -1,18 +1,10 @@
 <resources>
     <string name="app_name">SPenPresentationControl</string>
 
-    <string name="shutter">Shutter</string>
-    <string name="camera_switch">Switch</string>
-    <string name="next_filter">Next filter</string>
-    <string name="prev_filter">Prev filter</string>
-    <string name="zoom_in">Zoom in</string>
-    <string name="zoom_out">Zoom out</string>
-    <string name="spen_connecting">Connecting to SPen</string>
-    <string name="spen_connected">SPen connected</string>
-    <string name="spen_disconnected">SPen disconnected</string>
-    <string name="computer_connecting">Connecting to computer</string>
-    <string name="computer_connected">Computer connected</string>
-    <string name="computer_disconnected">Computer disconnected</string>
+    <string name="right">Right</string>
+    <string name="left">Left</string>
+    <string name="up">Up</string>
+    <string name="down">Down</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="close">Close</string>

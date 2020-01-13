@@ -2,7 +2,7 @@
 <remote-actions version="1.2">
     <action
         id="click"
-        label="@string/shutter"
+        label="@string/right"
         priority="1"
         trigger_key="CTRL_LEFT+A">
         <preference name="gesture" value="click"/>
@@ -10,7 +10,7 @@
 
     <action
         id="double_click"
-        label="@string/camera_switch"
+        label="@string/left"
         priority="2"
         trigger_key="CTRL_LEFT+B">
         <preference name="gesture" value="double_click"/>
@@ -18,7 +18,7 @@
 
     <action
         id="swipe_right"
-        label="@string/shutter"
+        label="@string/right"
         priority="3"
         trigger_key="CTRL_LEFT+C">
         <preference name="gesture" value="swipe_right"/>
@@ -26,7 +26,7 @@
 
     <action
         id="swipe_left"
-        label="@string/camera_switch"
+        label="@string/left"
         priority="4"
         trigger_key="CTRL_LEFT+D">
         <preference name="gesture" value="swipe_left"/>
@@ -34,7 +34,7 @@
 
     <action
         id="swipe_up"
-        label="@string/next_filter"
+        label="@string/up"
         priority="5"
         trigger_key="CTRL_LEFT+E">
         <preference name="gesture" value="swipe_up"/>
@@ -42,7 +42,7 @@
 
     <action
         id="swipe_down"
-        label="@string/prev_filter"
+        label="@string/down"
         priority="6"
         trigger_key="CTRL_LEFT+F">
         <preference name="gesture" value="swipe_down"/>
